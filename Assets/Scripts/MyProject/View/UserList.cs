@@ -74,24 +74,25 @@ public class UserList : MonoBehaviour
     //刷新UI
     void RefreshUI(IList<UserVO> datas)
     {
-        //ClearItems();
-        foreach (var data in datas)
+        ClearItems();
+        for (int i = 0;i < datas.Count;i++)
+        //foreach (var data in datas)
         {
-            UserList_Item item = CreateItem();
-            item.UpdateData(data);
+            UserList_Item item = CreateItem(i);
+            item.UpdateData(datas[i]);
             itemList.Add(item);
         }
         txt_userCount.text = datas.Count.ToString();
     }
     //新建列表项目
-    UserList_Item CreateItem()
+    UserList_Item CreateItem(int index)
     {
         UserList_Item item = GameObject.Instantiate<UserList_Item>(itemPrefab);
         item.transform.SetParent(itemPrefab.transform.parent);
         item.gameObject.SetActive(true);
         item.transform.localScale = Vector3.one;
-        item.transform.localPosition = Vector3.zero;
-
+        //item.transform.localPosition = Vector3.zero;
+        item.transform.localPosition = new Vector3(0, index * 30, 0);
         return item;
     }
     //清空列表
